@@ -1,0 +1,130 @@
+import java.util.*;
+public class tic{
+    static String arr[];
+    static String turn;
+    static String name;
+    static String name1;
+    static String name2;
+    static String check(){
+	    for (int a = 0; a < 8; a++) {
+			String line = null;
+
+			switch (a) {
+			case 0:
+				line = arr[0] + arr[1] + arr[2];
+				break;
+			case 1:
+				line = arr[3] + arr[4] + arr[5];
+				break;
+			case 2:
+				line = arr[6] + arr[7] + arr[8];
+				break;
+			case 3:
+				line = arr[0] + arr[3] + arr[6];
+				break;
+			case 4:
+				line = arr[1] + arr[4] + arr[7];
+				break;
+			case 5:
+				line = arr[2] + arr[5] + arr[8];
+				break;
+			case 6:
+				line = arr[0] + arr[4] + arr[8];
+				break;
+			case 7:
+				line = arr[2] + arr[4] + arr[6];
+				break;
+			}
+			if (line.equals("XXX")) {
+				return name;
+			}
+			
+			else if (line.equals("OOO")) {
+				return name1;
+			}
+		}
+		
+		for (int a = 0; a < 9; a++) {
+			if (Arrays.asList(arr).contains(String.valueOf(a + 1))) {
+				break;
+			}
+			else if (a == 8) {
+				return "draw";
+			}
+		}
+		System.out.print(name2 + " enter number to place "+turn + " = ");
+		return null;
+	}
+	static void printboard(){
+		System.out.println("|---|---|---|");
+		System.out.println("| "+arr[0]+" | "+arr[1]+" | "+arr[2]+" |");
+		System.out.println("|---|---|---|");
+		System.out.println("| "+arr[3]+" | "+arr[4]+" | "+arr[5]+" |");
+		System.out.println("|---|---|---|");
+		System.out.println("| "+arr[6]+" | "+arr[7]+" | "+arr[8]+" |");
+		System.out.println("|---|---|---|");
+		System.out.println();
+	}
+	public static void main(String[] args) 
+	{
+	    Scanner in = new Scanner(System.in);
+	    arr = new String [9];
+	    System.out.print("Enter 1st name i.e X = ");
+	    name = in.nextLine();
+	    System.out.print("Enter 2nd name i.e O = ");
+	    name1 = in.nextLine();
+	    turn = "X";
+		String winner = null;
+		for(int i=0 ; i < 9 ; i++)
+		{
+		        arr[i]=String.valueOf(i+1);
+		}
+		System.out.println("Welcome to tic tac toe game");
+		System.out.println();
+		printboard();
+		System.out.println();
+		System.out.print(name +" press number to mark X = ");
+		while(winner == null){
+		    int num;
+		    try {
+				num = in.nextInt();
+				if (!(num > 0 && num <= 9)) {
+					System.out.println(
+						"Re-enter number:");
+					continue;
+				}
+			}
+			catch (InputMismatchException e) {
+				System.out.println(
+					"Re-enter number:");
+				continue;
+			}
+			
+		if (arr[num - 1].equals(String.valueOf(num))) {
+				arr[num - 1] = turn;
+
+				if (turn.equals("X")) {
+					turn = "O";
+					name2 = name1;
+				}
+				else {
+					turn = "X";
+					name2 = name;
+				}
+				printboard();
+			    winner = check();
+					}
+				else {
+				System.out.println(	"Slot already taken; re-enter slot number:");
+			}
+		}
+	    if (winner.equalsIgnoreCase("draw")) {
+			System.out.println(
+				"It's a draw! Thanks for playing.");
+		}
+	
+		else {
+			System.out.println(winner+ " is winner . Thank You for Playing ......");
+		}
+	}
+}
